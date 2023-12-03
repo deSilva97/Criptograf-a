@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import controller.CryptoController;
@@ -22,67 +23,66 @@ public class Application {
 	private static LoginController loginController;
 	// Controlador para realizar operaciones de cifrado y descifrado
 	private static CryptoController cryptoController;
-	
-	
+
 	/**
-     * Inicializa los componentes necesarios para la aplicación.
-     */
-	
+	 * Inicializa los componentes necesarios para la aplicación.
+	 */
+
 	private static void init() {
 		sc = new Scanner(System.in);
 		userList = new ArrayList<User>();
-		
+
 		loginController = new LoginController();
 		cryptoController = null;
-		
-		// Agrega algunos usuarios a la lista (puedes personalizar esto según tus necesidades)
+
+		// Agrega algunos usuarios a la lista (puedes personalizar esto según tus
+		// necesidades)
 		userList.add(loginController.buildUser("DIEGO", "123456"));
 		userList.add(loginController.buildUser("PABLO", "a1b2c3_"));
 		userList.add(loginController.buildUser("JORGE", "123456"));
 		userList.add(loginController.buildUser("FELIX", "contraseña"));
-	
+
 	}
-	
+
 	/**
-     * Método principal que inicia la ejecución de la aplicación.
-     *
-     * @param args Argumentos de la línea de comandos.
-     */
+	 * Método principal que inicia la ejecución de la aplicación.
+	 *
+	 * @param args Argumentos de la línea de comandos.
+	 */
 	public static void main(String[] args) {
-		init();	// Inicializa la aplicación			
-		
+		init(); // Inicializa la aplicación
+
 		User user = null;
-		if(autologin) {
+		if (autologin) {
 			user = loginController.buildUser("ADMIN", "");
 		} else {
 			int maxTries = 3;
-			int currentTry = 0;		
-			
-			do {			
+			int currentTry = 0;
+
+			do {
 				currentTry++;
-				if(currentTry > maxTries) {
+				if (currentTry > maxTries) {
 					System.err.println("Máximo de intentos permitidos");
 					System.out.flush();
 					break;
 				}
-				
+
 				System.out.println("\nLogin >> (" + currentTry + "/" + maxTries + ")");
 				System.out.print("Nombre: ");
 				String name = sc.nextLine();
 				System.out.print("Contraseña: ");
 				String pssw = sc.nextLine();
-				
+
 				user = loginController.getLoginUser(name, pssw, userList);
-				
-			} while(user == null);
+
+			} while (user == null);
 		}
-		
-				
-		if(user != null) {
+
+		if (user != null) {
 			System.out.println("\nBienvenida/o " + user.getName() + "!");
-			
+
 			cryptoController = new CryptoController(sc);
-			
+
 			int opcion = -1;
 			do {
 				System.out.println("\nMENU " + user.getName());
@@ -91,8 +91,9 @@ public class Application {
 				System.out.println("2. Desencritptar frase");
 				System.out.print("Opcion: ");
 
-				opcion = sc.nextInt();
-
+				//opcion = sc.nextInt();
+				opcion = getValidatedScannerNextInt(sc, "");
+				
 				switch (opcion) {
 				case 0:
 					System.out.println("\nHasta pronto!!");
@@ -108,12 +109,38 @@ public class Application {
 					break;
 				}
 
-			} while (opcion != 0);	
+			} while (opcion != 0);
 		}
-				
+
 		System.out.println("\n\nFin del programa");
 		sc.close();
 	}
-	
-	
+
+	/**
+	 * Valida la entrada del usuario para asegurarse de que sea un número entero.
+	 *
+	 * @param scanner: El objeto Scanner para leer la entrada del usuario.
+	 * @param title:   El mensaje que se muestra para solicitar la entrada.
+	 * @return El número entero validado.
+	 */
+	private static int getValidatedScannerNextInt(Scanner scanner, String title) {
+		boolean validate;
+		int opcion = 0;
+		System.out.print(title);
+		do {
+			validate = false;
+			try {
+				opcion = scanner.nextInt();
+				validate = true;
+			} catch (InputMismatchException e) {
+				System.out.print("Debe introducir un número: ");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			scanner.nextLine();
+		} while (!validate);
+
+		return opcion;
+	}
+
 }
