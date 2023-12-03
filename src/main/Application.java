@@ -7,15 +7,26 @@ import controller.CryptoController;
 import controller.LoginController;
 import model.User;
 
-public class Application {
+/**
+ * Clase principal que ejecuta la aplicación de cifrado.
+ */
 
-	private static Scanner sc;	
+public class Application {
+	// Scanner para la entrada del usuario
+	private static Scanner sc;
+	// Lista de usuarios registrados en la aplicación
 	private static ArrayList<User> userList;
-	
+	// Variable para activar el inicio de sesión automático (autologin)
 	private static boolean autologin = false;
-	
+	// Controlador para manejar el inicio de sesión
 	private static LoginController loginController;
+	// Controlador para realizar operaciones de cifrado y descifrado
 	private static CryptoController cryptoController;
+	
+	
+	/**
+     * Inicializa los componentes necesarios para la aplicación.
+     */
 	
 	private static void init() {
 		sc = new Scanner(System.in);
@@ -24,6 +35,7 @@ public class Application {
 		loginController = new LoginController();
 		cryptoController = null;
 		
+		// Agrega algunos usuarios a la lista (puedes personalizar esto según tus necesidades)
 		userList.add(loginController.buildUser("DIEGO", "123456"));
 		userList.add(loginController.buildUser("PABLO", "a1b2c3_"));
 		userList.add(loginController.buildUser("JORGE", "123456"));
@@ -31,8 +43,13 @@ public class Application {
 	
 	}
 	
+	/**
+     * Método principal que inicia la ejecución de la aplicación.
+     *
+     * @param args Argumentos de la línea de comandos.
+     */
 	public static void main(String[] args) {
-		init();				
+		init();	// Inicializa la aplicación			
 		
 		User user = null;
 		if(autologin) {
