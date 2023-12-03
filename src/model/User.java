@@ -9,6 +9,8 @@ public class User implements Serializable{
 	String name;
 	String hash_password;	
 	
+	// Getters and setters
+	
 	public String getName() {
 		return name;
 	}
@@ -17,11 +19,15 @@ public class User implements Serializable{
 		return hash_password;
 	}
 	
+	// Constructores
+	
 	public User(String name, String hash_password) {
 		super();
 		this.name = name;
 		this.hash_password = hash_password;
 	}
+	
+	//Métodos sobrescritos
 	
 	@Override
 	public String toString() {

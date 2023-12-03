@@ -15,18 +15,29 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 import javax.crypto.SecretKey;
 
+/**
+ * Clase que controla las operaciones de cifrado y descifrado.
+ */
+
 public class CryptoController {
 
 	private Scanner scanner;
 	private SealedObject so;
 	private SecretKey key;
 	private Cipher cipher;
-
+	
+	/**
+     * Constructor de la clase CryptoController.
+     *
+     * @param scanner Objeto Scanner para la entrada del usuario.
+     */
+	
 	public CryptoController(Scanner scanner) {
 		this.scanner = scanner;
 
 		// Configuración del encryptado
 		try {
+			// Generar clave simétrica (AES)
 			key = KeyGenerator.getInstance("AES").generateKey();
 			cipher = Cipher.getInstance("AES");
 		} catch (NoSuchAlgorithmException e) {			
@@ -35,6 +46,10 @@ public class CryptoController {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+     * Método para encriptar una frase.
+     */
 	
 	public void encrypt() {
 		scanner.nextLine();
@@ -59,7 +74,11 @@ public class CryptoController {
 		}
 
 	}
-
+	
+	/**
+     * Método para descifrar una frase previamente cifrada.
+     */
+	
 	public void descrypt() {
 		System.out.println("Descifrar: " + so);
 
@@ -81,23 +100,6 @@ public class CryptoController {
 		} catch (IOException e) {			
 			e.printStackTrace();
 		}
-		/*
-		catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-*/ 
+
 	}
 }
