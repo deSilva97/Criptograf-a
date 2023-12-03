@@ -13,6 +13,10 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 import javax.crypto.SecretKey;
 
+/**
+ * Clase que controla las operaciones de cifrado y descifrado utilizando el algoritmo AES.
+ */
+
 public class CryptoController {
 
 	//Declaración de variables que vamos a usar
@@ -21,6 +25,12 @@ public class CryptoController {
 	private SecretKey key;
 	private Cipher cipher;
 
+	/**
+     * Constructor de la clase CryptoController.
+     *
+     * @param scanner Objeto Scanner para la entrada del usuario.
+     */
+	
 	public CryptoController(Scanner scanner) {
 		this.scanner = scanner;
 
@@ -38,7 +48,10 @@ public class CryptoController {
 		}
 	}
 	
-	//Este método encripta el mensaje con la key generada
+	/**
+     * Método que encripta un mensaje utilizando la clave generada.
+     */
+	
 	public void encrypt() {
 		scanner.nextLine();
 		System.out.print("Frase: ");
@@ -63,12 +76,17 @@ public class CryptoController {
 
 	}
 	
-	//Este método desencripta el mensaje con la key generada
+	/**
+     * Método que desencripta un mensaje utilizando la clave generada.
+     */
+	
 	public void descrypt() {
 		System.out.println("Descifrar: " + so);
 
 		try {
+			// Configuramos el cifrador para descifrar
 			cipher.init(Cipher.DECRYPT_MODE, key);
+			 // Obtenemos el mensaje original a partir del objeto sellado
 			String str = (String) so.getObject(cipher);
 			System.out.println("Frase: " + str);
 
