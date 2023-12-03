@@ -137,7 +137,7 @@ public class Application {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			scanner.nextLine();
+			System.out.flush();
 		} while (!validate);
 
 		return opcion;
