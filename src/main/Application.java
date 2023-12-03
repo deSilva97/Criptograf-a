@@ -1,8 +1,10 @@
-package controller;
+package main;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import controller.CryptoController;
+import controller.LoginController;
 import model.User;
 
 public class Application {
